@@ -7,7 +7,7 @@ from scoreboard import Scoreboard
 screen = Screen()
 screen.setup(width=600, height=600)
 screen.tracer(0)
-level = 0
+score = Scoreboard()
 cars = CarManager()
 player = Player()
 screen.listen()
@@ -23,11 +23,13 @@ while game_is_on:
     for car in cars.all_cars:
         if car.distance(player) < 20:
             game_is_on = False
+            score.game_over()
 
     # Detect if the turtle gets to the finish line, if so increment car speed
     if player.finish_check():
         player.go_to_start()
         cars.speed_up()
+        score.increase_level()
 
     screen.update()
 screen.exitonclick()
