@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="dd3fca6e-1e75-40c2-b228-e2a97dfb8276" name="Default Changelist" comment="Days 15 to 23">
+    <list default="true" id="dd3fca6e-1e75-40c2-b228-e2a97dfb8276" name="Default Changelist" comment="Days 23 - Added scoreboard - Day 23 complete">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Day-15-CoffeeMachine" beforeDir="false" afterPath="$PROJECT_DIR$/Day-15-CoffeeMachine" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Day-17-The-Quiz-Project-(OOP)" beforeDir="false" afterPath="$PROJECT_DIR$/Day-17-The-Quiz-Project-(OOP)" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Day-23-Turtle-Crossing/turtle-crossing-start.zip" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,7 +73,14 @@
       <option name="project" value="LOCAL" />
       <updated>1628710102049</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Days 23 - Added scoreboard - Day 23 complete">
+      <created>1628711305802</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1628711305802</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -96,7 +104,8 @@
     </ignored-roots>
     <MESSAGE value="Days 15 to 17" />
     <MESSAGE value="Days 15 to 23" />
-    <option name="LAST_COMMIT_MESSAGE" value="Days 15 to 23" />
+    <MESSAGE value="Days 23 - Added scoreboard - Day 23 complete" />
+    <option name="LAST_COMMIT_MESSAGE" value="Days 23 - Added scoreboard - Day 23 complete" />
     <option name="PRESELECT_EXISTING_CHANGELIST" value="true" />
   </component>
 </project>
