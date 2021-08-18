@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="dd3fca6e-1e75-40c2-b228-e2a97dfb8276" name="Default Changelist" comment="Days 24 completed">
+    <list default="true" id="dd3fca6e-1e75-40c2-b228-e2a97dfb8276" name="Default Changelist" comment="Day 25 squirrel analysis completed">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Day-15-CoffeeMachine" beforeDir="false" afterPath="$PROJECT_DIR$/Day-15-CoffeeMachine" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Day-17-The-Quiz-Project-(OOP)" beforeDir="false" afterPath="$PROJECT_DIR$/Day-17-The-Quiz-Project-(OOP)" afterDir="false" />
@@ -86,7 +86,14 @@
       <option name="project" value="LOCAL" />
       <updated>1629039644926</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Day 25 squirrel analysis completed">
+      <created>1629230103045</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1629230103045</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -112,7 +119,8 @@
     <MESSAGE value="Days 15 to 23" />
     <MESSAGE value="Days 23 - Added scoreboard - Day 23 complete" />
     <MESSAGE value="Days 24 completed" />
-    <option name="LAST_COMMIT_MESSAGE" value="Days 24 completed" />
+    <MESSAGE value="Day 25 squirrel analysis completed" />
+    <option name="LAST_COMMIT_MESSAGE" value="Day 25 squirrel analysis completed" />
     <option name="PRESELECT_EXISTING_CHANGELIST" value="true" />
   </component>
 </project>
