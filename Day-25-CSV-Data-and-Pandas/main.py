@@ -24,12 +24,11 @@ while len(guessed_states) < 50:
                                     prompt="What's another State name?").title()
 
     if answer_state == "Exit":
-        # Remove all guessed states from state_list
-        for state in guessed_states:
-            state_list.remove(state)
+        # Generate list of missing states
+        missing_states = [state for state in state_list if state not in guessed_states]
 
-        # Load remaining state_list into Pandas Dataframe and export to CSV
-        data_frame = pandas.DataFrame(state_list)
+        # Load remaining missing_states into Pandas Dataframe and export to CSV
+        data_frame = pandas.DataFrame(missing_states)
         data_frame.to_csv("states_to_learn.csv")
         break
 

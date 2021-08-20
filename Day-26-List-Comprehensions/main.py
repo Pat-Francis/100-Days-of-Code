@@ -1,3 +1,4 @@
+# List Comprehensions
 # Exercise 1 - Square the numbers
 numbers = [1, 1, 2, 3, 5, 8, 13, 21, 34, 55]
 squared_numbers = [number ** 2 for number in numbers]
@@ -15,3 +16,22 @@ with open("file2.txt") as f2:
 
 overlap = [int(number) for number in file1 if number in file2]
 print(overlap)
+
+# Dictionary comprehensions
+# Exercise 1 - Create dict of word:length from sentence
+sentence = "What is the Airspeed Velocity of an Unladen Swallow?"
+words_dict = {word: len(word) for word in sentence.split()}
+print(words_dict)
+
+# Exercise 2 - Create dict of day: degrees F from day: degrees C
+weather_c = {
+    "Monday": 12,
+    "Tuesday": 14,
+    "Wednesday": 15,
+    "Thursday": 14,
+    "Friday": 21,
+    "Saturday": 22,
+    "Sunday": 24,
+}
+weather_f = {day: (temp_c * 9 / 5) + 32 for (day, temp_c) in weather_c.items()}
+print(weather_f)
