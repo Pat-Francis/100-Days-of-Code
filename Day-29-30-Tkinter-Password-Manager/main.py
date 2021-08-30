@@ -2,6 +2,29 @@ import tkinter
 from tkinter import messagebox
 from random import choice, randint, shuffle
 import pyperclip
+import json
+
+
+# ---------------------------- FIND PASSWORD ------------------------------- #
+def find_password():
+    website = website_entry.get()
+
+    try:
+        with open("data.json", "r") as data_file:
+            # Read in existing data
+            existing_data = json.load(data_file)
+    except FileNotFoundError:
+        # Give warning data.json is not found
+        messagebox.showinfo(title="Error", message="File data.json Not Found")
+    else:
+        if website in existing_data:
+            # Retrieve username and password from existing_data and display in messagebox
+            account_username = existing_data[website]["Email"]
+            account_password = existing_data[website]["Password"]
+            messagebox.showinfo(title=website, message=f"Username: {account_username}\n"
+                                                       f"Password: {account_password}")
+        else:
+            messagebox.showerror(title="Account not found", message=f"No details for '{website}' exists.")
 
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
@@ -14,13 +37,13 @@ def generate_password():
 
     password_list = []
 
-    # Add letters to new password list
+    # Add letters to new password_list
     [password_list.append(choice(letters)) for _ in range(randint(8, 10))]
 
-    # Add symbols to new password list
+    # Add symbols to new password_list
     [password_list.append(choice(symbols)) for _ in range(randint(2, 4))]
 
-    # Add numbers to new password list
+    # Add numbers to new password_list
     [password_list.append(choice(numbers)) for _ in range(randint(2, 4))]
 
     shuffle(password_list)
@@ -37,29 +60,40 @@ def generate_password():
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 def save_password():
-    # Store data from the Entries as variables
+    # Store data from the Entries
     website_data = website_entry.get()
     username_data = username_entry.get()
     password_data = password_entry.get()
+    new_data = {
+        website_data: {
+            "Email": username_data,
+            "Password": password_data,
+        }}
 
-    if len(website_data) == 0 or len(username_data) == 0 or len(password_data) == 0:
+    if len(website_data) == 0 or len(password_data) == 0:
         messagebox.showinfo(title="Field(s) Missing", message="Please fill in any blank fields")
     else:
-        # Create a message box asking user to OK or cancel adding a new entry to data.txt
-        is_ok = messagebox.askokcancel(title=website_data, message=f"The details entered are:\n"
-                                                                   f"Username: {username_data}\n"
-                                                                   f"Password: {password_data}\n"
-                                                                   f"Ok to save?")
-        if is_ok:
-            # Open data.txt and append data from Entries
-            with open("data.txt", "a") as data_file:
-                data_file.write(f"{website_data} | {username_data} | {password_data}\n")
+        try:
+            with open("data.json", "r") as data_file:
+                # Read in existing data
+                existing_data = json.load(data_file)
+        except FileNotFoundError:
+            # Create a blank JSON file and write new_data to it
+            with open("data.json", "w") as data_file:
+                json.dump(new_data, data_file, indent=4)
+        else:
+            # Update existing data with new_data
+            existing_data.update(new_data)
 
+            # Reopen data.json in write mode and save updated data
+            with open("data.json", "w") as data_file:
+                json.dump(existing_data, data_file, indent=4)
+        finally:
             # Clear the website_entry and password_entry fields
             website_entry.delete(0, tkinter.END)
             password_entry.delete(0, tkinter.END)
 
-        
+
 # ---------------------------- UI SETUP ------------------------------- #
 # Create Tkinter window and configure
 window = tkinter.Tk()
@@ -83,8 +117,8 @@ password_label = tkinter.Label(text="Password:")
 password_label.grid(column=0, row=3)
 
 # Create Entries and set positions/sizes
-website_entry = tkinter.Entry(width=52)
-website_entry.grid(column=1, row=1, columnspan=2, sticky="w")
+website_entry = tkinter.Entry(width=33)
+website_entry.grid(column=1, row=1, sticky="w")
 website_entry.focus()
 
 username_entry = tkinter.Entry(width=52)
@@ -95,6 +129,9 @@ password_entry = tkinter.Entry(width=33)
 password_entry.grid(column=1, row=3, sticky="w")
 
 # Create Entries and set positions/sizes
+search_button = tkinter.Button(text="Search", width=15, command=find_password)
+search_button.grid(column=2, row=1, sticky="w")
+
 pass_gen_button = tkinter.Button(text="Generate Password", command=generate_password)
 pass_gen_button.grid(column=2, row=3, sticky="w")
 
