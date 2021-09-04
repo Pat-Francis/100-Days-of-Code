@@ -10,12 +10,12 @@ MY_PASSWORD = "password1234"
 
 
 def check_if_overhead():
-    response = requests.get(url="http://api.open-notify.org/iss-now.json")
-    response.raise_for_status()
-    data = response.json()
+    iss_response = requests.get(url="http://api.open-notify.org/iss-now.json")
+    iss_response.raise_for_status()
+    iss_data = iss_response.json()
 
-    iss_latitude = float(data["iss_position"]["latitude"])
-    iss_longitude = float(data["iss_position"]["longitude"])
+    iss_latitude = float(iss_data["iss_position"]["latitude"])
+    iss_longitude = float(iss_data["iss_position"]["longitude"])
 
     if iss_latitude - 5 <= MY_LAT <= iss_latitude + 5 and iss_longitude - 5 <= MY_LAT <= iss_longitude + 5:
         return True
@@ -30,11 +30,11 @@ def is_night():
         "formatted": 0,
     }
 
-    response = requests.get("https://api.sunrise-sunset.org/json", params=parameters)
-    response.raise_for_status()
-    data = response.json()
-    sunrise_hour = int(data["results"]["sunrise"].split("T")[1].split(":")[0])
-    sunset_hour = int(data["results"]["sunset"].split("T")[1].split(":")[0])
+    sun_response = requests.get("https://api.sunrise-sunset.org/json", params=parameters)
+    sun_response.raise_for_status()
+    sun_data = sun_response.json()
+    sunrise_hour = int(sun_data["results"]["sunrise"].split("T")[1].split(":")[0])
+    sunset_hour = int(sun_data["results"]["sunset"].split("T")[1].split(":")[0])
 
     hour_now = datetime.now().hour
 
