@@ -34,7 +34,7 @@ day_before_close_price = float(stock_data_list[1]["4. close"])
 
 percent_change = round((yesterday_close_price / day_before_close_price * 100) - 100, 2)
 
-if percent_change >= 0 or percent_change <= -0:
+if percent_change >= 5 or percent_change <= -5:
     news_parameters = {
         "qInTitle": COMPANY_NAME,
         "apiKey": NEWS_API_KEY
