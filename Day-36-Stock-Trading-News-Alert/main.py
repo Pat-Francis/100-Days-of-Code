@@ -46,10 +46,8 @@ if percent_change >= 5 or percent_change <= -5:
     news_data = get_news.json()["articles"]
     latest_three_articles = news_data[:3]
 
-    if percent_change > 0:
-        email_subject = f"{STOCK} {percent_change}%"
-    else:
-        email_subject = f"{STOCK} {percent_change}%"
+    # Set the email subject and body strings
+    email_subject = f"{STOCK} {percent_change}%"
 
     # Add articles headline, brief and URL to the email_body
     email_body = ""
@@ -59,7 +57,7 @@ if percent_change >= 5 or percent_change <= -5:
     for article in formatted_body:
         email_body += article
 
-    # encode the email_body to remove non-ascii characters (non-ascii character '\xa0' causes the email send to fail)
+    # encode the email_body to remove non-ascii characters (non-ascii character '\xa0' caused the email send to fail)
     body_encode = email_body.encode("ascii", errors="ignore")
     body_decode = body_encode.decode()
 
