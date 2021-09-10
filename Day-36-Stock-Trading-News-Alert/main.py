@@ -34,7 +34,7 @@ day_before_close_price = float(stock_data_list[1]["4. close"])
 
 percent_change = round((yesterday_close_price / day_before_close_price * 100) - 100, 2)
 
-if percent_change >= 5 or percent_change <= -5:
+if percent_change >= 0 or percent_change <= -0:
     news_parameters = {
         "qInTitle": COMPANY_NAME,
         "apiKey": NEWS_API_KEY
@@ -53,10 +53,11 @@ if percent_change >= 5 or percent_change <= -5:
 
     # Add articles headline, brief and URL to the email_body
     email_body = ""
-    for article in latest_three_articles:
-        email_body += "Headline: " + article.get("title") + "\n"
-        email_body += "Brief: " + article.get("description") + "\n"
-        email_body += article.get("url") + "\n\n"
+    formatted_body = [f"Headline: {article['title']}\nBrief: {article['description']}\n{article['url']}\n\n"
+                      for article in latest_three_articles]
+
+    for article in formatted_body:
+        email_body += article
 
     # encode the email_body to remove non-ascii characters (non-ascii character '\xa0' causes the email send to fail)
     body_encode = email_body.encode("ascii", errors="ignore")
