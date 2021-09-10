@@ -7,9 +7,9 @@ COMPANY_NAME = "Tesla Inc"
 ALPHA_ENDPOINT = "https://www.alphavantage.co/query"
 ALPHA_API_KEY = os.getenv("ALPHA_API_KEY")
 NEWS_ENDPOINT = "https://newsapi.org/v2/everything"
+NEWS_API_KEY = os.getenv("NEWS_API_KEY")
 
 # Get email constants from environment variables
-NEWS_API_KEY = os.getenv("NEWS_API_KEY")
 MY_EMAIL = os.getenv("MY_EMAIL")
 EMAIL_PASSWORD = os.getenv("EMAIL_PASSWORD")
 RECEIVING_EMAIL = os.getenv("RECEIVING_EMAIL")
