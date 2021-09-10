@@ -1,14 +1,18 @@
 import requests
 import os
-from datetime import date
-from datetime import timedelta
+import smtplib
+
 STOCK = "TSLA"
 COMPANY_NAME = "Tesla Inc"
-
+ALPHA_ENDPOINT = "https://www.alphavantage.co/query"
 ALPHA_API_KEY = os.getenv("ALPHA_API_KEY")
+NEWS_ENDPOINT = "https://newsapi.org/v2/everything"
+
+# Get email constants from environment variables
 NEWS_API_KEY = os.getenv("NEWS_API_KEY")
-# STEP 1: Use https://www.alphavantage.co
-# When STOCK price increase/decreases by 5% between yesterday and the day before yesterday then print("Get News").
+MY_EMAIL = os.getenv("MY_EMAIL")
+EMAIL_PASSWORD = os.getenv("EMAIL_PASSWORD")
+RECEIVING_EMAIL = os.getenv("RECEIVING_EMAIL")
 
 stock_parameters = {
     "function": "TIME_SERIES_DAILY",
@@ -16,44 +20,53 @@ stock_parameters = {
     "apikey": ALPHA_API_KEY
 }
 
-today = date.today()
-yesterday = str(today - timedelta(days=1))
-day_before_yesterday = str(today - timedelta(days=2))
-get_stock = requests.get(url="https://www.alphavantage.co/query", params=stock_parameters)
+# Retrieve the stock data JSON and get the daily time series
+get_stock = requests.get(url=ALPHA_ENDPOINT, params=stock_parameters)
 get_stock.raise_for_status()
-stock_data = get_stock.json()
+stock_data = get_stock.json()["Time Series (Daily)"]
 
-yesterday_close_price = float(stock_data["Time Series (Daily)"].get(yesterday).get("4. close"))
-day_before_close_price = float(stock_data["Time Series (Daily)"].get(day_before_yesterday).get("4. close"))
+# Take the stock_data dict and add the values to a list
+stock_data_list = [value for (key, value) in stock_data.items()]
 
-print(yesterday_close_price / day_before_close_price * 100)
-print(today, type(yesterday), day_before_yesterday)
+# Get the stock close price from the two most recent days
+yesterday_close_price = float(stock_data_list[0]["4. close"])
+day_before_close_price = float(stock_data_list[1]["4. close"])
 
-# STEP 2: Use https://newsapi.org
-# Instead of printing ("Get News"), actually get the first 3 news pieces for the COMPANY_NAME.
+percent_change = round((yesterday_close_price / day_before_close_price * 100) - 100, 2)
 
-news_parameters = {
-    "q": COMPANY_NAME,
-    "apiKey": NEWS_API_KEY
-}
-get_news = requests.get(url="https://newsapi.org/v2/everything", params=news_parameters)
-get_news.raise_for_status()
-news_data = get_news.json()
-latest_news = news_data["articles"][0:3]
-news_title = latest_news.get("title")
-news_content = latest_news.get("content")
+if percent_change >= 5 or percent_change <= -5:
+    news_parameters = {
+        "qInTitle": COMPANY_NAME,
+        "apiKey": NEWS_API_KEY
+    }
 
+    # Retrieve the news JSON and grab the latest three articles
+    get_news = requests.get(url=NEWS_ENDPOINT, params=news_parameters)
+    get_news.raise_for_status()
+    news_data = get_news.json()["articles"]
+    latest_three_articles = news_data[:3]
 
-# STEP 3: Use https://www.twilio.com
-# Send a seperate message with the percentage change and each article's title and description to your phone number.
+    if percent_change > 0:
+        email_subject = f"{STOCK} {percent_change}%"
+    else:
+        email_subject = f"{STOCK} {percent_change}%"
 
-# Optional: Format the SMS message like this:
-"""
-TSLA: 🔺2%
-Headline: Were Hedge Funds Right About Piling Into Tesla Inc. (TSLA)?. 
-Brief: We at Insider Monkey have gone over 821 13F filings that hedge funds and prominent investors are required to file by the SEC The 13F filings show the funds' and investors' portfolio positions as of March 31st, near the height of the coronavirus market crash.
-or
-"TSLA: 🔻5%
-Headline: Were Hedge Funds Right About Piling Into Tesla Inc. (TSLA)?. 
-Brief: We at Insider Monkey have gone over 821 13F filings that hedge funds and prominent investors are required to file by the SEC The 13F filings show the funds' and investors' portfolio positions as of March 31st, near the height of the coronavirus market crash.
-"""
+    # Add articles headline, brief and URL to the email_body
+    email_body = ""
+    for article in latest_three_articles:
+        email_body += "Headline: " + article.get("title") + "\n"
+        email_body += "Brief: " + article.get("description") + "\n"
+        email_body += article.get("url") + "\n\n"
+
+    # encode the email_body to remove non-ascii characters (non-ascii character '\xa0' causes the email send to fail)
+    body_encode = email_body.encode("ascii", errors="ignore")
+    body_decode = body_encode.decode()
+
+    # Send email
+    with smtplib.SMTP("smtp.gmail.com") as connection:
+        connection.starttls()
+        connection.login(user=MY_EMAIL, password=EMAIL_PASSWORD)
+        connection.sendmail(from_addr=MY_EMAIL,
+                            to_addrs=RECEIVING_EMAIL,
+                            msg=f"Subject:{email_subject}\n\n{body_decode}"
+                            )
