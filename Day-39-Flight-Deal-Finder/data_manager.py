@@ -5,25 +5,26 @@ SHEET_URL = os.getenv("SHEET_URL")
 SHEET_KEY = os.getenv("SHEET_KEY")
 
 
-# This class is responsible for talking to the Google Sheet.
 class DataManager:
 
     def __init__(self):
+        self.destination_data = {}
 
-        self.response = requests.get(url=SHEET_URL)
-        self.sheet_data = self.response.json()
-        self.sheet_headers = {
-            "Authorization": f"Bearer {SHEET_KEY}",
-            "Content-Type": "application/json"
-        }
+    def get_destination_data(self):
+        response = requests.get(url=SHEET_URL)
+        data = response.json()
+        self.destination_data = data["prices"]
+        return self.destination_data
 
-    def update_iata_code(self):
-        for row in self.sheet_data["prices"]:
+    def update_destination_codes(self):
+        for city in self.destination_data:
             new_data = {
                 "price": {
-                    "id": row["id"],
-                    "iataCode": row["iataCode"]
+                    "iataCode": city["iataCode"]
                 }
             }
-            sheet_response = requests.put(url=f"{SHEET_URL}/{row['id']}", json=new_data, headers=self.sheet_headers)
-            print(sheet_response.text)
+            response = requests.put(
+                url=f"{SHEET_URL}/{city['id']}",
+                json=new_data
+            )
+            print(response.text)
