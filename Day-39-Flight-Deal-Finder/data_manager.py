@@ -3,12 +3,14 @@ import requests
 
 SHEET_URL = os.getenv("SHEET_URL")
 SHEET_KEY = os.getenv("SHEET_KEY")
+SHEET_CUSTOMERS = os.getenv("SHEET_CUSTOMERS")
 
 
 class DataManager:
 
     def __init__(self):
         self.destination_data = {}
+        self.customer_data = {}
 
     def get_destination_data(self):
         response = requests.get(url=SHEET_URL)
@@ -28,3 +30,9 @@ class DataManager:
                 json=new_data
             )
             print(response.text)
+
+    def get_customer_emails(self):
+        response = requests.get(url=SHEET_CUSTOMERS)
+        data = response.json()
+        self.customer_data = data["users"]
+        return self.customer_data
