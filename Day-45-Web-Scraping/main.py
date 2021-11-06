@@ -1,35 +1,54 @@
 from bs4 import BeautifulSoup
 import requests
 
-response = requests.get(url="https://news.ycombinator.com/")
+URL = "https://web.archive.org/web/20200518073855/https://www.empireonline.com/movies/features/best-movies-2/"
 
-y_combinator_page = response.text
+response = requests.get(URL)
+website_html = response.text
 
-soup = BeautifulSoup(y_combinator_page, "html.parser")
+soup = BeautifulSoup(website_html, "html.parser")
 
-articles = soup.find_all(name="a", class_="titlelink")
+all_movies = soup.find_all(name="h3", class_="title")
 
-article_texts = []
-article_links = []
+movie_titles = [movie.getText() for movie in all_movies]
+movies = movie_titles[::-1]
 
-for article in articles:
-    text = article.getText()
-    article_texts.append(text)
-    link = article.get("href")
-    article_links.append(link)
+with open("movies.txt", mode="w") as file:
+    for movie in movies:
+        file.write(f"{movie}\n")
 
-# list comprehension to convert list of strings e.g. "74 points" to list of ints e.g. 74
-article_scores = [int(score.getText().split()[0]) for score in soup.find_all(name="span", class_="score")]
-print(article_texts)
-print(article_links)
-print(article_scores)
+# # Scrape from Y Combinator front page
+# response = requests.get(url="https://news.ycombinator.com/")
+#
+# y_combinator_page = response.text
+#
+# soup = BeautifulSoup(y_combinator_page, "html.parser")
+#
+# articles = soup.find_all(name="a", class_="titlelink")
+#
+# article_texts = []
+# article_links = []
+#
+# for article in articles:
+#     text = article.getText()
+#     article_texts.append(text)
+#     link = article.get("href")
+#     article_links.append(link)
+#
+# # list comprehension to convert list of strings e.g. "74 points" to list of ints e.g. 74
+# article_scores = [int(score.getText().split()[0]) for score in soup.find_all(name="span", class_="score")]
+# print(article_texts)
+# print(article_links)
+# print(article_scores)
+#
+# highest_score = max(article_scores)
+# highest_score_index = article_scores.index(highest_score)
+#
+# print(article_texts[highest_score_index])
+# print(article_links[highest_score_index])
+# print(article_scores[highest_score_index])
 
-highest_score = max(article_scores)
-highest_score_index = article_scores.index(highest_score)
 
-print(article_texts[highest_score_index])
-print(article_links[highest_score_index])
-print(article_scores[highest_score_index])
 
 # encoding is included to fix a UnicodeDecodeError
 # with open("website.html", encoding='utf-8') as file:
