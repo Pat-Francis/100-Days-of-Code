@@ -3,8 +3,6 @@ from bs4 import BeautifulSoup
 import os
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
-import pprint
-pp = pprint.PrettyPrinter(indent=4)
 
 SPOTIPY_CLIENT_ID = os.getenv("SPOTIPY_CLIENT_ID")
 SPOTIPY_CLIENT_SECRET = os.getenv("SPOTIPY_CLIENT_SECRET")
@@ -28,19 +26,19 @@ song_titles = [song.getText() for song in all_songs]
 # Set scope for spotify access token
 scope = "playlist-modify-private"
 
-# Auth with Spotify, adds the .cache file to the directory which holds the Spotify access token
+# Auth with Spotify, adds .cache file with the Spotify access token to current directory
 sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=SPOTIPY_CLIENT_ID,
                                                client_secret=SPOTIPY_CLIENT_SECRET,
                                                redirect_uri=SPOTIPY_REDIRECT_URI,
                                                scope=scope))
 
-# Pull user info from Spotify and print current users display id
-user_info = sp.current_user()
-print(user_info.get("id"))
+# Get Users ID for the current user
+user_id = sp.current_user().get("id")
 
 song_URIs = []
 year = chosen_date.split("-")[0]
-# Iterate through the list of song titles and get the corresponding Spotify track URI, if the track exists
+
+# Iterate through song_titles and append URI to song_URIs (if it exists).
 for song in song_titles:
     search_result = sp.search(q=f"track: {song} year: {year}", type="track")
 
@@ -50,4 +48,9 @@ for song in song_titles:
     except IndexError:
         print(f"Could not find '{song}' on Spotify.  Skipped.")
 
-pp.pprint(song_URIs)
+# Create a private playlist
+create_playlist = sp.user_playlist_create(user=user_id, name=f"{chosen_date} Billboard 100", public=False)
+playlist_uri = create_playlist.get("uri")
+
+# Add songs in song_URIs to the newly created playlist
+sp.playlist_add_items(playlist_id=playlist_uri, items=song_URIs)
