@@ -5,7 +5,6 @@ from selenium.webdriver.common.keys import Keys
 import os
 import time
 from bs4 import BeautifulSoup
-import requests
 
 GOOGLE_FORM_URL = os.getenv("GOOGLE_FORM_URL")
 ZILLOW_URL = os.getenv("ZILLOW_URL")
@@ -41,6 +40,19 @@ for url in range(len(property_urls)):
     if not property_urls[url].startswith("https"):
         property_urls[url] = f"{url_prefix}{property_urls[url]}"
 
-# TODO Use Selenium to input property address, price and url into a Google form
+driver.get(GOOGLE_FORM_URL)
+time.sleep(3)
+
+for i in range(len(property_addresses)):
+    form_text_boxes = driver.find_elements(By.CLASS_NAME, "quantumWizTextinputPaperinputInput")
+    submit_button = driver.find_element(By.XPATH, "//span[contains(text(), 'Submit')]")
+
+    form_text_boxes[0].send_keys("", property_addresses[i])
+    form_text_boxes[1].send_keys("", property_prices[i])
+    form_text_boxes[2].send_keys("", property_urls[i])
+    submit_button.click()
+
+    submit_another_link = driver.find_element(By.LINK_TEXT, "Submit another response")
+    submit_another_link.click()
 
 driver.quit()
