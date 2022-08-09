@@ -1,9 +1,22 @@
-from flask import Flask
-app = Flask(__name__)
+import time
 
 
-@app.route('/')
-def hello_world():
-    return 'Hello, World!'
+def speed_calc_decorator(function):
+    def wrapper_func():
+        start_time = time.time()
+        function()
+        end_time = time.time()
+        print(f"{function.__name__} ran in {end_time - start_time} seconds")
+    return wrapper_func()
 
-# Use 'flask run' in terminal to run Flask web server
+
+@speed_calc_decorator
+def fast_function():
+    for i in range(10000000):
+        i * i
+
+
+@speed_calc_decorator
+def slow_function():
+    for i in range(100000000):
+        i * i
