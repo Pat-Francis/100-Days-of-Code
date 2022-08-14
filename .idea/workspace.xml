@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="dd3fca6e-1e75-40c2-b228-e2a97dfb8276" name="Default Changelist" comment="Days 15 to 23">
-      <change afterPath="$PROJECT_DIR$/Day-27-Tkinter/miles_to_km.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="dd3fca6e-1e75-40c2-b228-e2a97dfb8276" name="Default Changelist" comment="Day 28 Completed">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Day-27-Tkinter/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Day-27-Tkinter/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,7 +23,7 @@
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/Day-27-Tkinter" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -94,7 +91,28 @@
       <option name="project" value="LOCAL" />
       <updated>1629230103045</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Day 27 complete">
+      <created>1629922415524</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1629922415524</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Day 28 initial setup">
+      <created>1629982796598</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1629982796598</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Day 28 Completed">
+      <created>1630071403864</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1630071403864</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -121,7 +139,10 @@
     <MESSAGE value="Days 23 - Added scoreboard - Day 23 complete" />
     <MESSAGE value="Days 24 completed" />
     <MESSAGE value="Day 25 squirrel analysis completed" />
-    <option name="LAST_COMMIT_MESSAGE" value="Day 25 squirrel analysis completed" />
+    <MESSAGE value="Day 27 complete" />
+    <MESSAGE value="Day 28 initial setup" />
+    <MESSAGE value="Day 28 Completed" />
+    <option name="LAST_COMMIT_MESSAGE" value="Day 28 Completed" />
     <option name="PRESELECT_EXISTING_CHANGELIST" value="true" />
   </component>
 </project>
