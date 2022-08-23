@@ -12,7 +12,7 @@
             <li>{{book.title}} - {{book.author}} - {{book.rating}}</li>
         </ul>
     {% else %}
-    Library in empty.<p>
+    Library is empty.<p>
     {% endfor %}
     
 <a href="{{ url_for('add') }}">Add New Book</a>
