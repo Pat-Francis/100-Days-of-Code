@@ -6,15 +6,18 @@
 </head>
 <body>
 <h1>My Library</h1>
-
+    <ul>
     {% for book in books: %}
-        <ul>
-            <li>{{book.title}} - {{book.author}} - {{book.rating}}</li>
-        </ul>
+        <li>
+            <!-- TODO Add functionality to delete a record using the line below -->
+            <a href="{{ url_for('home') }}">Delete</a>
+            {{book.title}} - {{book.author}} - {{book.rating}}/10
+            <a href="{{ url_for('amend', book_id=book.id) }}">Edit Rating</a></li>
+
     {% else %}
-    Library is empty.<p>
+    Library is empty.
     {% endfor %}
-    
+    </ul>
 <a href="{{ url_for('add') }}">Add New Book</a>
 </body>
 </html>

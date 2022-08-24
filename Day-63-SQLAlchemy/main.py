@@ -13,7 +13,6 @@ class Books(db.Model):
     author = db.Column(db.String(250), unique=True, nullable=False)
     rating = db.Column(db.String(4), unique=True, nullable=False)
 
-
 db.create_all()
 
 harry_potter = Books(id=1, title="Harry Potter", author="J. K. Rowling", rating="9.3")
