@@ -29,28 +29,35 @@ def add():
         new_book = Books(title=request.form["title"],
                          author=request.form["author"],
                          rating=request.form["rating"])
-
         db.session.add(new_book)
         db.session.commit()
-
         return redirect(url_for("home"))
 
     return render_template("add.html")
 
 
-@app.route("/amend/<book_id>", methods=['GET', 'POST'])
-def amend(book_id):
-    selected_book = db.session.query(Books).get(book_id)
-
+@app.route("/amend", methods=['GET', 'POST'])
+def amend():
     if request.method == "POST":
-        selected_book.rating = request.form["new_rating"]
-
+        book_id = request.form["id"]
+        book_to_amend = Books.query.get(book_id)
+        book_to_amend.rating = request.form["rating"]
         db.session.commit()
-
         return redirect(url_for("home"))
+
+    book_id = request.args.get("id")
+    selected_book = Books.query.get(book_id)
     return render_template("amend.html", book=selected_book)
+
+
+@app.route("/delete")
+def delete():
+    book_id = request.args.get("id")
+    book_to_delete = Books.query.get(book_id)
+    db.session.delete(book_to_delete)
+    db.session.commit()
+    return redirect(url_for("home"))
 
 
 if __name__ == "__main__":
     app.run(debug=True)
-

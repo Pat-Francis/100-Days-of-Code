@@ -5,12 +5,12 @@
     <title>Library</title>
 </head>
 <body>
-    <form action="{{ url_for('amend', book_id=book.id) }}" method="POST">
+    <form action="{{ url_for('amend') }}" method="POST">
         <h1>My Library</h1>
         Book name: {{ book.title }} <p>
         Current Rating: {{ book.rating }} <p>
-        <label>New Rating</label>
-        <input name="new_rating" type="text">
+        <input hidden="hidden" name="id" value="{{ book.id }}">
+        <input name="rating" type="text" placeholder="New Rating">
         <button type="submit">Change Rating</button>
     </form>
 </body>
